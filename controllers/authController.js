@@ -42,16 +42,20 @@ const login = async (req, res) => {
         expiresIn: "7d",
       }
     );
-await sendEmail({
-  email: user.email,
-  subject: "Login Alert",
-  message: `
-    <h2>Login Successful</h2>
-    <p>Hello ${user.name},</p>
-    <p>Your Care Plus account was accessed successfully.</p>
-    <p>Time: ${new Date().toLocaleString()}</p>
-  `,
-});
+try {
+  await sendEmail({
+    email: user.email,
+    subject: "Login Alert",
+    message: `
+      <h2>Login Successful</h2>
+      <p>Hello ${user.name},</p>
+      <p>Your Care Plus account was accessed successfully.</p>
+      <p>Time: ${new Date().toLocaleString()}</p>
+    `,
+  });
+} catch (err) {
+  console.log("Login email failed:", err.message);
+}
     // Send response
     res.status(200).json({
       success: true,
@@ -123,6 +127,7 @@ const forgotPassword = async (
         "Password Reset",
       message,
     });
+
 
     res.status(200).json({
       success: true,
