@@ -43,18 +43,21 @@ const login = async (req, res) => {
       }
     );
 try {
-  // await sendEmail({
-  //   email: user.email,
-  //   subject: "Login Alert",
-  //   message: `
-  //     <h2>Login Successful</h2>
-  //     <p>Hello ${user.name},</p>
-  //     <p>Your Care Plus account was accessed successfully.</p>
-  //     <p>Time: ${new Date().toLocaleString()}</p>
-  //   `,
-  // });
+  await sendEmail({
+    email: user.email,
+    subject: "Login Alert",
+    message: `
+      <h2>Login Successful</h2>
+      <p>Hello ${user.name},</p>
+      <p>Your Care Plus account was accessed successfully.</p>
+      <p>Time: ${new Date().toLocaleString()}</p>
+    `,
+  });
 } catch (err) {
-  console.log("Login email failed:", err.message);
+  console.log(
+    "Email failed:",
+    err.message
+  );
 }
     // Send response
     res.status(200).json({
